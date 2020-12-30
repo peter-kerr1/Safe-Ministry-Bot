@@ -1,3 +1,8 @@
 2020-12-30 21:22:07,852:INFO:discord.client: logging in using static token
 2020-12-30 21:22:08,470:INFO:discord.gateway: Shard ID None has sent the IDENTIFY payload.
 2020-12-30 21:22:08,826:INFO:discord.gateway: Shard ID None has connected to Gateway: ["gateway-prd-main-z6kj",{"micros":141325,"calls":["discord-sessions-prd-2-24",{"micros":139714,"calls":["start_session",{"micros":90603,"calls":["api-prd-main-wxwh",{"micros":62991,"calls":["get_user",{"micros":6002},"add_authorized_ip",{"micros":7598},"get_guilds",{"micros":4869},"coros_wait",{"micros":1}]}]},"guilds_connect",{"micros":2,"calls":[]},"presence_connect",{"micros":41809,"calls":[]}]}]}] (Session ID: e9023d25e818a2f1303c5be722560fac).
+2020-12-30 21:33:32,520:INFO:discord.client: Received signal to terminate bot and event loop.
+2020-12-30 21:33:32,520:INFO:discord.client: Cleaning up tasks.
+2020-12-30 21:33:32,520:INFO:discord.client: Cleaning up after 1 tasks.
+2020-12-30 21:33:32,531:INFO:discord.client: All tasks finished cancelling.
+2020-12-30 21:33:32,532:INFO:discord.client: Closing the event loop.
