@@ -8,7 +8,7 @@ class SafeMinistry(commands.Cog, name='Safe Ministry'):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command()
+    @commands.command(hidden=True)
     async def echo(ctx, *, message: str):
         await ctx.send(message)
     
