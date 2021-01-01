@@ -13,7 +13,7 @@ handler.setFormatter(logging.Formatter('%(asctime)s:%(levelname)s:%(name)s: %(me
 logger.addHandler(handler)
 
 # Initialize the bot
-bot = commands.Bot(command_prefix='!', help_command=commands.DefaultHelpCommand(no_category="Misc"))
+bot = commands.Bot(command_prefix='!', help_command=commands.DefaultHelpCommand(no_category='Misc'), intents=discord.Intents.all())
 
 # Load all extensions to start
 for filename in os.listdir('./extensions'):

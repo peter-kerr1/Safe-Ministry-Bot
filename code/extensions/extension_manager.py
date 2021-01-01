@@ -21,7 +21,7 @@ class ExtensionManager(commands.Cog, name=name):
     @commands.command()
     async def unload(self, ctx, *, extension: str):
         """Unloads an extension, given the extension filename"""
-        if extension == "extension_manager":
+        if extension == 'extension_manager':
             await ctx.send(f"Unloading of {name} prevented.")
         else:
             self.bot.unload_extension(f"extensions.{extension}")
@@ -50,8 +50,8 @@ class ExtensionManager(commands.Cog, name=name):
         extList += "```"
         await ctx.send(extList)
 
+    # Ensures that only members with the Administrator permission can run the above commands
     async def cog_check(self, ctx):
-        """Ensure that only members with the Administrator permission can run the above commands"""
         if not ctx.author.guild_permissions.administrator:
             raise commands.MissingPermissions(['administrator'])
         return True
