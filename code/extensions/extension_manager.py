@@ -17,32 +17,35 @@ class ExtensionManager(commands.Cog, name=name):
     async def load(self, ctx, *, extension: str):
         """Loads an extension, given the extension filename"""
         self.bot.load_extension(f"extensions.{extension}")
+        await ctx.send(f"'{extension}' loaded successfully.")
 
     @commands.command()
     async def unload(self, ctx, *, extension: str):
         """Unloads an extension, given the extension filename"""
         if extension == 'extension_manager':
-            await ctx.send(f"Unloading of {name} prevented.")
+            await ctx.send(f"Unloading of '{os.path.basename(__file__)[:-3]}' prevented.")
         else:
             self.bot.unload_extension(f"extensions.{extension}")
+            await ctx.send(f"'{extension}' unloaded successfully.")
 
     @commands.command()
     async def reload(self, ctx, *, extension: str):
         """Reloads an extension, given the extension filename"""
         self.bot.reload_extension(f"extensions.{extension}")
+        await ctx.send(f"'{extension}' reloaded successfully.")
 
     @commands.command()
-    async def curr_extensions(self, ctx):
+    async def curr_ext(self, ctx):
         """Lists the currently loaded extensions"""
         extList = "```Currently loaded extensions:\n"
-        for extName in self.bot.extensions:
+        for extName in sorted(self.bot.extensions):
             extList += f" • {extName.split('.')[1]}\n"
         extList += "```"
         await ctx.send(extList)
 
     @commands.command()
-    async def list_extensions(self, ctx):
-        """Lists all extensions available"""
+    async def list_ext(self, ctx):
+        """Lists the filenames of all extensions available"""
         extList = "```Available extensions:\n"
         for filename in os.listdir('./extensions'):
             if filename.endswith('.py'):
@@ -56,8 +59,10 @@ class ExtensionManager(commands.Cog, name=name):
             raise commands.MissingPermissions(['administrator'])
         return True
 
+    # Print out error messages to the channel where they were invoked
     async def cog_command_error(self, ctx, error):
-        await ctx.send("**Error:** " + str(error))
+        error = str(error).replace("Command raised an exception: ", '')
+        await ctx.send("**[Error]** " + error)
     
 def setup(bot):
     bot.add_cog(ExtensionManager(bot))
