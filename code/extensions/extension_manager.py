@@ -1,14 +1,11 @@
 import os
 from discord.ext import commands
 
-# This variable is local to this file
-name='Extension Manager'
-
-class ExtensionManager(commands.Cog, name=name):
+class ExtensionManager(commands.Cog, name='Extension Manager'):
     """
     Allows for the dynamic loading, unloading and reloading of extensions, given the filename containing the extension.
-    Use '!curr_extensions' to see the currently loaded extensions.
-    Use '!list_extensions' to see all extensions available.
+    Use '!curr_ext' to see the currently loaded extensions.
+    Use '!list_ext' to see all extensions available.
     """
     def __init__(self, bot):
         self.bot = bot
@@ -22,8 +19,9 @@ class ExtensionManager(commands.Cog, name=name):
     @commands.command()
     async def unload(self, ctx, *, extension: str):
         """Unloads an extension, given the extension filename"""
-        if extension == 'extension_manager':
-            await ctx.send(f"Unloading of '{os.path.basename(__file__)[:-3]}' prevented.")
+        extManagerFilename = os.path.basename(__file__)[:-3]
+        if extension == extManagerFilename:
+            await ctx.send(f"Unloading of '{extManagerFilename}' prevented.")
         else:
             self.bot.unload_extension(f"extensions.{extension}")
             await ctx.send(f"'{extension}' unloaded successfully.")

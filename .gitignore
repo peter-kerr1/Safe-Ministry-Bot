@@ -1,3 +1,4 @@
 code/.env
 code/extensions/__pycache__/
 *.log
+.vscode/settings.json
