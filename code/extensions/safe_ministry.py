@@ -32,6 +32,9 @@ class SafeMinistry(commands.Cog, name='Safe Ministry'):
         members = channel.members
         for member in members:
             await member.edit(deafen=deaf)
+            if deaf is True:# and member.dm_channel is None:
+                await member.send("You have been automatically deafened in line with rule x.x:\n\
+                    *2 leaders pls*")
 
     async def manageChannel(self, channel):
         if self.validVoiceChannelState(channel):
