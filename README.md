@@ -12,7 +12,7 @@ The following source material was used as the basis for the Safe Ministry guidel
   - A lot of the principles from this page have been applied, though no video functionality is allowed on the Discord server.
   
 
-***But wait, how do the Safe Ministry guildlines allow a youth discord server to exist?***  
+***But wait, how do the Safe Ministry guidelines allow a youth discord server to exist?***  
 Most of the guidelines regarding online interaction address one-to-one conversations, such as phone calls, texts and emails. The discord server that this bot is designed to reside in is built to facilitate group interaction between multiple young people and leaders, never one-to-one communication. As such, the server most closely falls into the category of 'Social Media' for the first two documents listed above, rendering it subject primarily to 'The Ten' outlined in the [Safe Ministry Blueprint for Youth Ministry Leaders](https://safeministry.org.au/wp-content/uploads/pdf/SM-BlueprintForYthMinLeaders.pdf), and 'discretion'.
 
 *Link discord server template*
