@@ -1,13 +1,13 @@
 # Safe Ministry Bot
 
-The following source material was used as the basis for the Safe Ministry guidelines that this bot enforces:  
+The following source material was used as the basis for the Safe Ministry guidelines that the Discord server follows / this bot enforces:  
 - [Social Contact Policy v3.1](https://safeministry.org.au/wp-content/uploads/pdf/PSU_SocialContactPolicy_v3_1.pdf)
   - Social media sections
 - [Safe Ministry Blueprint for Youth Ministry Leaders](https://safeministry.org.au/wp-content/uploads/pdf/SM-BlueprintForYthMinLeaders.pdf)
   - Section 5: The Golden Rules
   - Section 5.g: Communication
 - [COVID-19 - Using Video Conferencing](https://safeministry.org.au/covid-19-principles-when-using-video-conferencing/?fbclid=IwAR33oCo0xghOn5uiSCGxzwrUQnvTMpXEG7nUpol0GNGCiKyvuI0MFoDnWoo)
-  - Points 4, 6 and 8
+  - Points 4, 6 and 8 (Point 3 is addressed with a Google form that parents must fill out)
   - ~~A lot of the principles from this page have been applied, though no video functionality is allowed on the Discord server.~~
   
 
