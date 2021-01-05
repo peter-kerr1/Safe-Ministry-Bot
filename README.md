@@ -13,7 +13,7 @@ Particularly relevant during the COVID-19 era is how Discord creates a positive 
 - Playing computer games together
 - Hosting Bible study or even youth group if meeting in person is not an option
 
-*Link discord server template*
+`Link discord server template`
 
 ## The Bot
 By default, Discord offers functionality that has the possibility to fail to adhere to Safe Ministry guidelines - such as one leader and one youth member chatting in a voice channel. This bot prevents such events from occurring by automatically enforcing a set of rules; restricting forms of communication between youth group members and their leaders that would otherwise make a Discord server unsuitable for a youth group. The bot also has additional functionality to make the running of such a server more convenient.
