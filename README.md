@@ -3,19 +3,20 @@
 This bot is designed to be added to a [Discord](https://discord.com/) server, to make the server compliant with the Anglican Diocese of Sydney's Safe Ministry guidelines, and hence suitable for a youth group community.
 
 ## Discord
-Hosting an official Discord server creates opportunities for youth to deepen their sense of community with both each other and their leaders. Interacting throughout the week provides more space for mutual encouragement, modelling Christian living and even new friendships to develop. A stronger sense of connection to the youth community also has the potential to lead to deeper discussions while on church grounds, positively impacting important ministries such as Bible Study.
+Discord offers richer and deeper interaction between members than other social media platforms such as Facebook and Instagram with its text and voice channels. Hosting an official Discord server creates opportunities for youth to deepen their sense of community with both each other and their leaders. Interacting throughout the week provides more space for mutual encouragement, modelling Christian living and even new friendships to develop. A stronger sense of connection to the youth community also has the potential to lead to deeper discussions while on church grounds, positively impacting important ministries such as Bible Study.
 
 Particularly relevant during the COVID-19 era is how Discord creates a positive online space for people to both formally and casually interact when meeting in person is not an option.
 
-#### Possible activities
+***Example activities***
 - Sharing Bible verses throughout the week; encouraging one another to read the Bible
 - ???
 - Playing computer games together
 - Hosting Bible study or even youth group if meeting in person is not an option
 
-It achieves this by automatically enforcing a set of rules, restricting forms of communication between youth group members and their leaders that would otherwise make a Discord server unsuitable for this interaction.  ~~The bot also has some additional functionality to make the running of such a server more convenient~~
+## The bot
+By default, Discord offers functionality that has the possibility to not adhere to Safe Ministry guidelines, such as one leader and one youth member chatting in a voice channel. This bot prevents such events from occurring by automatically enforcing a set of rules, restricting forms of communication between youth group members and their leaders that would otherwise make a Discord server unsuitable for a youth group. The bot also has additional functionality to make the running of such a server more convenient.
 
-*List of functionality*
+## List of functionality
 
 This bot (a program that can perform tasks automatically) is designed to be used in conjunction with a suitably configured Discord server to enable young people of youth group age and their leaders to communicate together in a group setting online, while adhering to Safe Ministry guidelines. The primary feature that sets Discord apart from other social media platforms is the fact that it offers voice communication - this also presents additional Safe Ministry challenges, and is one of the problems that this bot has been created to solve.
 
