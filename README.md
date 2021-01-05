@@ -20,7 +20,7 @@ By default, Discord offers functionality that has the possibility to fail to adh
 
 The primary feature that sets Discord apart from other social media platforms is the fact that it offers voice communication - this also presents additional Safe Ministry challenges, and is one of the problems that this bot has been created to solve.
 
-### List of functionality
+`List of functionality`
 
 ## Safe Ministry
 The following source material was used as the basis for the Safe Ministry guidelines that the Discord server follows / this bot enforces:  
