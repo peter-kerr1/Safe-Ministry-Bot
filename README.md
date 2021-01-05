@@ -7,7 +7,7 @@ Hosting an official Discord server creates opportunities for youth to deepen the
 
 Particularly relevant during the COVID-19 era is how Discord creates a positive online space for people to both formally and casually interact when meeting in person is not an option.
 
-### Typical activities
+#### Possible activities
 - Sharing Bible verses throughout the week; encouraging one another to read the Bible
 - ???
 - Playing computer games together
