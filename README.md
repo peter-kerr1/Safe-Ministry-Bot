@@ -2,7 +2,7 @@
 
 This bot is designed to be added to a [Discord](https://discord.com/) server, to make the server compliant with the Anglican Diocese of Sydney's Safe Ministry guidelines, and hence suitable for a youth group community.
 
-[//]: # "Why have a Discord server?"
+## Discord
 Hosting an official Discord server creates opportunities for youth to deepen their sense of community with both each other and their leaders. Interacting throughout the week provides more space for mutual encouragement, modelling Christian living and even new friendships to develop. A stronger sense of connection to the youth community also has the potential to lead to deeper discussions while on church grounds, positively impacting important ministries such as Bible Study.
 
 Particularly relevant during the COVID-19 era is how Discord creates a positive online space for people to both formally and casually interact when meeting in person is not an option.
