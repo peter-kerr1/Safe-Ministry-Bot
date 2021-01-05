@@ -9,7 +9,7 @@ Particularly relevant during the COVID-19 era is how Discord creates a positive 
 
 ***Example activities***
 - Sharing Bible verses throughout the week; encouraging one another to read the Bible
-- ???
+- `???`
 - Playing computer games together
 - Hosting Bible study or even youth group if meeting in person is not an option
 
@@ -41,4 +41,4 @@ Without modification, Discord could allow one young person and one leader to joi
 
 ## Setup
 
-TODO
+`TODO`
