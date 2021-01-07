@@ -15,10 +15,7 @@ class SafeMinistry(commands.Cog, name='Safe Ministry'):
 
     # Returns True if there is a Youth member present in the list of members, False otherwise
     def youthPresent(self, members):
-        if find(lambda m: self.hasRole(m, 'Youth'), members) is not None:
-            return True
-        else:
-            return False
+        return find(lambda m: self.hasRole(m, 'Youth'), members) is not None
 
     def validVoiceChannelState(self, voiceChannel):
         members = voiceChannel.members
@@ -50,6 +47,6 @@ class SafeMinistry(commands.Cog, name='Safe Ministry'):
             await self.manageChannel(after.channel)
         elif before.channel is not None and after.channel is None:
             await self.manageChannel(before.channel)
-    
+
 def setup(bot):
     bot.add_cog(SafeMinistry(bot))

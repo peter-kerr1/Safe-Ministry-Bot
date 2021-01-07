@@ -42,3 +42,8 @@ Without modification, Discord could allow one young person and one leader to joi
 ## Setup
 
 `TODO`
+
+## Recommended Addons
+
+`TODO`
+Invite Dyno bot, configured with xyz

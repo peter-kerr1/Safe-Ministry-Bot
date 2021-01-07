@@ -1,5 +1,6 @@
-import os
 from discord.ext import commands
+
+import os
 
 class ExtensionManager(commands.Cog, name='Extension Manager'):
     """

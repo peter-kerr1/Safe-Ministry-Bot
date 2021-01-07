@@ -1,4 +1,11 @@
-code/.env
+code/Lib/
+code/Include/
+code/Scripts/
+code/images/
 code/extensions/__pycache__/
 *.log
+*.pickle
+code/.env
+code/pyvenv.cfg
+code/credentials.json
 .vscode/settings.json
