@@ -1,9 +1,9 @@
 from discord.ext import commands, tasks
 from discord.utils import get
 
+import os
 import pickle
 import yagmail
-import os.path
 from googleapiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
@@ -47,34 +47,27 @@ class Signup(commands.Cog):
     @tasks.loop(seconds=5.0)
     async def checkSignups(self):
         values = self.getResponses()
-
-        # guild = get(self.bot.guilds, name="St Matts Youth")
-
-        # if guild is not None:
-        #     print(guild.channels)
-
-        welcomeChannelId = 793985785412976640
-        channel = self.bot.get_channel(welcomeChannelId)
-
-        
-
-
         if not values:
             print('[ERROR]: Failed to retrieve data from Form responses!')
         else:
             currNumResponses = len(values)
             if currNumResponses > self.numResponses:
+
+                # guild = get(self.bot.guilds, name="St Matts Youth")
+                # if guild is not None:
+                #     print(guild.channels)
+                welcomeChannelId = 793985785412976640
+                channel = self.bot.get_channel(welcomeChannelId)
+
                 numNewResponses = currNumResponses - self.numResponses
                 for newResponse in values[-numNewResponses:]:
-
                     invite = await channel.create_invite(max_uses=1, reason=f"Generating invite for {newResponse[1]}")
-
                     yag = yagmail.SMTP('stmattsyouth.bot@gmail.com', os.getenv('EMAIL_PASSWORD'))
                     contents = ["<b>**This is an automated email**</b>", '<hr>',
-                    "<p>Hi!</p>", "Here is your single-use Discord invite link:",
-                    f'<a href="{invite.url}">{invite.url}</a>', "<br>",
-                    "<i>If you have any questions, reply to this email and a real person will get back to you!</i>",
-                    "<br>", yagmail.inline("images/st_matts_youth_logo.png")]
+                                "<p>Hi!</p>", "Here is your single-use Discord invite link:",
+                                f'<a href="{invite.url}">{invite.url}</a>',"<br>",
+                                "<i>If you have any questions, reply to this email and a real person will get back to you!</i>",
+                                "<br>", yagmail.inline("images/st_matts_youth_logo.png")]
                     yag.send(newResponse[3], "St Matt's Youth Discord Sign-up Link", contents)
                 self.numResponses = currNumResponses
 
