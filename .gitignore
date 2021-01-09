@@ -9,3 +9,4 @@ code/.env
 code/pyvenv.cfg
 code/credentials.json
 .vscode/settings.json
+code/extensions/modules/__pycache__/gsheets.cpython-39.pyc
