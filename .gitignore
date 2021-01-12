@@ -1,7 +1,6 @@
 code/Lib/
 code/Include/
 code/Scripts/
-code/images/
 code/extensions/__pycache__/
 *.log
 *.pickle
