@@ -13,11 +13,21 @@ class Signup(commands.Cog):
         self.gsheets = gsheets()
         self.spreadsheetId = '1sLFGdC6ITTyBmqi7egNB62ztD5gUUMAXcihlEzFhCpw'
         self.cellRange = 'Form Responses 1!A2:D'
+        self.emailAddrIndex = 3
         self.numResponses = len(self.formResponses())
         self.checkSignups.start()
 
     def formResponses(self):
         return self.gsheets.getValues(self.spreadsheetId, self.cellRange)
+
+    def sendEmail(self, email, invite):
+        yag = yagmail.SMTP('stmattsyouth.bot@gmail.com', os.getenv('EMAIL_PASSWORD'))
+        contents = ["<b>**This is an automated email**</b>", '<hr>',
+                    "<p>Hi!</p>", "Here is your single-use Discord invite link:",
+                    f'<a href="{invite.url}">{invite.url}</a>',"<br>",
+                    "<i>If you have any questions, reply to this email and a real person will get back to you!</i>",
+                    "<br>", yagmail.inline("images/youth_logo.png")]
+        yag.send(email, "St Matt's Youth Discord Sign-up Link", contents)
 
     @tasks.loop(seconds=5.0)
     async def checkSignups(self):
@@ -37,13 +47,7 @@ class Signup(commands.Cog):
                 numNewResponses = currNumResponses - self.numResponses
                 for newResponse in responses[-numNewResponses:]:
                     invite = await channel.create_invite(max_uses=1, reason=f"Generating invite for {newResponse[1]}")
-                    yag = yagmail.SMTP('stmattsyouth.bot@gmail.com', os.getenv('EMAIL_PASSWORD'))
-                    contents = ["<b>**This is an automated email**</b>", '<hr>',
-                                "<p>Hi!</p>", "Here is your single-use Discord invite link:",
-                                f'<a href="{invite.url}">{invite.url}</a>',"<br>",
-                                "<i>If you have any questions, reply to this email and a real person will get back to you!</i>",
-                                "<br>", yagmail.inline("images/st_matts_youth_logo.png")]
-                    yag.send(newResponse[3], "St Matt's Youth Discord Sign-up Link", contents)
+                    self.sendEmail(newResponse[self.emailAddrIndex], invite)
                 self.numResponses = currNumResponses
 
     # When the extension is unloaded, stop checking for signups
