@@ -12,7 +12,7 @@ class LinkFilter(commands.Cog, name='Link Filter'):
         self.imageFormats = ("image/png", "image/jpeg", "image/jpg", "image/gif")
         self.whitelist = ["youtube.com", "youtu.be"]
 
-    def inWhitelist(url):
+    def inWhitelist(self, url):
         domain = urlparse(url).netloc
         domain = domain.replace("www.", '')
         return domain in self.whitelist
@@ -27,7 +27,7 @@ class LinkFilter(commands.Cog, name='Link Filter'):
     async def on_message(self, message):
         urls = re.findall(self.regex, message.clean_content)
         for url in urls:
-            if not self.isImageURL(url) or not self.inWhitelist(url):
+            if not self.isImageURL(url) and not self.inWhitelist(url):
                 await message.author.send("Only image URLs and the following websites are allowed:")
                 await message.delete()
 
