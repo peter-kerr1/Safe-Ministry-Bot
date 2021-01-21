@@ -10,15 +10,15 @@ class SafeMinistry(commands.Cog, name='Safe Ministry'):
     """
     def __init__(self, bot):
         self.bot = bot
-        
+
     # Returns True if there is a Youth member present in the list of members, False otherwise
     def youthPresent(self, members):
-        return find(lambda m: hasRole(m, 'Youth'), members) is not None
+        return find(lambda m: hasRole(m, ['Youth']), members) is not None
 
     def validVoiceChannelState(self, voiceChannel):
         members = voiceChannel.members
         if self.youthPresent(members):
-            leaders = [member for member in members if hasRole(member, 'Leader')]
+            leaders = [member for member in members if hasRole(member, ['Leader'])]
             if len(leaders) < 2:
                 return False
         return True

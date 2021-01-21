@@ -9,7 +9,7 @@ async def addRole(member, role, reason=None):
         return True
     return False
 
-# Returns True if the member has and of the specified roles, False otherwise
+# Returns True if the member has any of the specified roles, False otherwise
 def hasRole(member, roles):
     for role in roles:
         if get(member.roles, name=role) is not None:
