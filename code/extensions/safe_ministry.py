@@ -1,5 +1,5 @@
 from discord.ext import commands
-from discord.utils import find, get
+from discord.utils import find
 
 from .modules.wrappers import hasRole
 
