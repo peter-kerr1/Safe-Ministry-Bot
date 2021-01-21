@@ -11,3 +11,11 @@ code/pyvenv.cfg
 code/credentials.json
 .vscode/settings.json
 code/extensions/moderator_commands.py
+
+.replit
+poetry.lock
+pyproject.toml
+code/repl.it/
+*/__pycache__/
+code/bot_replit.py
+code/keep_awake.py
