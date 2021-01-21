@@ -1,3 +1,4 @@
+from discord import ChannelType
 from discord.ext import commands
 
 import re
@@ -33,6 +34,10 @@ class LinkFilter(commands.Cog, name='Link Filter'):
 
     @commands.Cog.listener()
     async def on_message(self, message):
+        # Ignore DMs with the bot
+        if message.channel.type == ChannelType.private:
+            return
+
         author = message.author
         if not hasRole(author, ['Youth Minister', 'Leader']):
             await self.filterMessage(message)
