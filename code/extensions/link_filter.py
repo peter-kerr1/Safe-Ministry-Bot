@@ -35,7 +35,7 @@ class LinkFilter(commands.Cog, name='Link Filter'):
     async def on_message(self, message):
         author = message.author
         if not hasRole(author, ['Youth Minister', 'Leader']):
-            self.filterMessage(message)
+            await self.filterMessage(message)
 
 def setup(bot):
     bot.add_cog(LinkFilter(bot))
