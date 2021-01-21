@@ -20,7 +20,7 @@ class NewMember(commands.Cog, name='New Member'):
     async def on_member_join(self, member):
         responses = self.formResponses()
         if not responses:
-            print('[ERROR]: Failed to retrieve data from Google Form responses!')
+            print("[ERROR]: Failed to retrieve data from Google Form responses!")
         else:
             accountName = f"{member.name}#{member.discriminator}"
             reponse = find(lambda r: r[self.accNameIndex] == accountName, responses[::-1])
