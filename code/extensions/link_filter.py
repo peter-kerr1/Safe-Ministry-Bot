@@ -38,6 +38,7 @@ class LinkFilter(commands.Cog, name='Link Filter'):
         if message.channel.type == ChannelType.private:
             return
 
+        # Don't filter messages of youth minister or leaders
         author = message.author
         if not hasRole(author, ['Youth Minister', 'Leader']):
             await self.filterMessage(message)
