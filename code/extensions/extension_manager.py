@@ -15,23 +15,23 @@ class ExtensionManager(commands.Cog, name='Extension Manager'):
     async def load(self, ctx, *, extension: str):
         """Loads an extension, given the extension filename"""
         self.bot.load_extension(f"extensions.{extension}")
-        await ctx.send(f"'{extension}' loaded successfully.")
+        await ctx.send(f"**{extension}** loaded successfully.")
 
     @commands.command()
     async def unload(self, ctx, *, extension: str):
         """Unloads an extension, given the extension filename"""
         extManagerFilename = os.path.basename(__file__)[:-3]
         if extension == extManagerFilename:
-            await ctx.send(f"Unloading of '{extManagerFilename}' prevented.")
+            await ctx.send(f"Unloading of **{extManagerFilename}** prevented.")
         else:
             self.bot.unload_extension(f"extensions.{extension}")
-            await ctx.send(f"'{extension}' unloaded successfully.")
+            await ctx.send(f"**{extension}** unloaded successfully.")
 
     @commands.command()
     async def reload(self, ctx, *, extension: str):
         """Reloads an extension, given the extension filename"""
         self.bot.reload_extension(f"extensions.{extension}")
-        await ctx.send(f"'{extension}' reloaded successfully.")
+        await ctx.send(f"**{extension}** reloaded successfully.")
 
     @commands.command()
     async def curr_ext(self, ctx):
@@ -46,7 +46,7 @@ class ExtensionManager(commands.Cog, name='Extension Manager'):
     async def list_ext(self, ctx):
         """Lists the filenames of all extensions available"""
         extList = "```Available extensions:\n"
-        for filename in os.listdir('./extensions'):
+        for filename in sorted(os.listdir('./extensions')):
             if filename.endswith('.py'):
                 extList += f" • {filename[:-3]}\n"
         extList += "```"

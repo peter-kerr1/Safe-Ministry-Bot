@@ -15,4 +15,3 @@ def hasRole(member, roles):
         if get(member.roles, name=role) is not None:
             return True
     return False
-    
