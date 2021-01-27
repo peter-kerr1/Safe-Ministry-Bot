@@ -15,3 +15,12 @@ def hasRole(member, roles):
         if get(member.roles, name=role) is not None:
             return True
     return False
+
+# Returns true if the message author is a Youth Minister or Leader.
+# Designed to be used as a check for a command, eg: @commands.check(isLeader) above a command definition.
+async def isLeader(ctx):
+    return hasRole(ctx.author, ['Youth Minister', 'Leader'])
+
+# Returns the channel in the guild that has a name matching channelName
+def getChannel(guild, channelName):
+    return get(guild.channels, name=channelName)

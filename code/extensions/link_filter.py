@@ -5,7 +5,7 @@ import re
 import requests
 from replit import db
 from urllib.parse import urlparse
-from .modules.wrappers import hasRole
+from .modules.wrappers import hasRole, isLeader, getChannel
 
 class LinkFilter(commands.Cog, name='Link Filter'):
     def __init__(self, bot):
@@ -16,9 +16,6 @@ class LinkFilter(commands.Cog, name='Link Filter'):
         # Allows us to assume that the whitelist key exists in the db in other functions
         if "whitelist" not in db.keys():
             db["whitelist"] = []
-
-    async def isLeader(ctx):
-        return hasRole(ctx.author, ['Youth Minister', 'Leader'])
 
     @commands.group()
     async def whitelist(self, ctx):
@@ -66,10 +63,11 @@ class LinkFilter(commands.Cog, name='Link Filter'):
         urls = re.findall(self.urlRegex, message.clean_content)
         for url in urls:
             if not self.isImageURL(url) and not self.inWhitelist(url):
-                msg = "Only image links and the following websites are allowed:\n```"
+                suggChannel = getChannel(message.guild, "suggestions")
+                msg = "Only image links and the following websites are currently allowed:\n```"
                 for domain in sorted(db["whitelist"]):
                     msg += f" • {domain}\n"
-                msg += "```"
+                msg += f"```If you think the link you just sent should be allowed, let us know in the {suggChannel.mention} channel!"
                 await message.author.send(msg)
                 await message.delete()
                 return
