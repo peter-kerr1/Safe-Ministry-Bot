@@ -28,7 +28,7 @@ class SafeMinistry(commands.Cog, name='Safe Ministry'):
         for member in members:
             await member.edit(deafen=deaf)
             if deaf is True and member.dm_channel is None:
-                await member.send("**Voice channel currently disabled:** there are less than two leaders in the voice channel.\n"
+                await member.send(f"**Voice channel currently disabled:** there are less than two leaders in the {channel.mention} voice channel.\n"
                                   "The channel will be enabled again when two or more leaders join.\n"
                                   "*This is the only time you will receive this message.*")
 
