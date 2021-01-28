@@ -2,7 +2,8 @@ from discord import ChannelType
 from discord.ext import commands
 
 import re
-import requests
+# import requests
+import aiohttp
 from replit import db
 from urllib.parse import urlparse
 from .modules.wrappers import hasRole, isLeader, getChannel
@@ -53,16 +54,21 @@ class LinkFilter(commands.Cog, name='Link Filter'):
         domain = domain.replace('www.', '')
         return domain in db["whitelist"]
 
-    def isImageURL(self, url):
-        r = requests.head(url)
-        if r.headers['content-type'] in self.imageFormats:
-            return True
-        return False
+    async def isImageURL(self, url):
+        # r = requests.head(url)
+        # if r.headers['content-type'] in self.imageFormats:
+        #     return True
+        # return False
+        async with aiohttp.ClientSession() as session:
+            async with session.head(url) as r:
+                if r.headers["content-type"] in self.imageFormats:
+                    return True
+                return False
 
     async def filterMessage(self, message):
         urls = re.findall(self.urlRegex, message.clean_content)
         for url in urls:
-            if not self.isImageURL(url) and not self.inWhitelist(url):
+            if not await self.isImageURL(url) and not self.inWhitelist(url):
                 suggChannel = getChannel(message.guild, "suggestions")
                 msg = "Only image links and the following websites are currently allowed:\n```"
                 for domain in sorted(db["whitelist"]):
