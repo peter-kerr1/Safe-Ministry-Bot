@@ -2,7 +2,6 @@ from discord import ChannelType
 from discord.ext import commands
 
 import re
-# import requests
 import aiohttp
 from replit import db
 from urllib.parse import urlparse
@@ -55,10 +54,6 @@ class LinkFilter(commands.Cog, name='Link Filter'):
         return domain in db["whitelist"]
 
     async def isImageURL(self, url):
-        # r = requests.head(url)
-        # if r.headers['content-type'] in self.imageFormats:
-        #     return True
-        # return False
         async with aiohttp.ClientSession() as session:
             async with session.head(url) as r:
                 if r.headers["content-type"] in self.imageFormats:
@@ -69,10 +64,10 @@ class LinkFilter(commands.Cog, name='Link Filter'):
         urls = re.findall(self.urlRegex, message.clean_content)
         for url in urls:
             if not await self.isImageURL(url) and not self.inWhitelist(url):
-                suggChannel = getChannel(message.guild, "suggestions")
                 msg = "Only image links and the following websites are currently allowed:\n```"
                 for domain in sorted(db["whitelist"]):
                     msg += f" • {domain}\n"
+                suggChannel = getChannel(message.guild, "suggestions")
                 msg += f"```If you think the link you just sent should be allowed, let us know in the {suggChannel.mention} channel!"
                 await message.author.send(msg)
                 await message.delete()
