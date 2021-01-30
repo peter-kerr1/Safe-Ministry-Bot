@@ -5,11 +5,15 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
 
 class gsheets:
+    """
+    A wrapper that abstracts all the complexity away of communicating with the Google Sheets API.
+    Only allows you to retrieve values from a specified spreadsheet.
+    """
     def __init__(self):
         self.credentials = self.getCredentials()
         self.sheets = build('sheets', 'v4', credentials=self.credentials).spreadsheets()
 
-    # Get permission to access the stored Google Form responses
+    # Authenticate with the Google Sheets API
     def getCredentials(self):
         creds = None
         if os.path.exists('sheetsToken.pickle'):
@@ -28,6 +32,7 @@ class gsheets:
                 pickle.dump(creds, token)
         return creds
 
+    # Gets a range of values from a specific spreadsheet
     def getValues(self, spreadsheetId, cellRange):
         result = self.sheets.values().get(spreadsheetId=spreadsheetId, range=cellRange).execute()
         return result.get('values', [])

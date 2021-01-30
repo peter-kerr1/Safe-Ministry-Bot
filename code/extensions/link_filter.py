@@ -19,8 +19,9 @@ class LinkFilter(commands.Cog, name='Link Filter'):
 
     @commands.group()
     async def whitelist(self, ctx):
+        """Lists the domains currently in the whitelist"""
         if ctx.invoked_subcommand is None:
-            message = "```Allowed websites:\n"
+            message = "```Allowed domains:\n"
             for domain in sorted(db["whitelist"]):
                 message += f" • {domain}\n"
             message += "```"
@@ -29,6 +30,7 @@ class LinkFilter(commands.Cog, name='Link Filter'):
     @whitelist.command()
     @commands.check(isLeader)
     async def add(self, ctx, domain: str):
+        """Adds a domain to the whitelist"""
         if domain not in db["whitelist"]:
             whitelist = db["whitelist"]
             whitelist.append(domain)
@@ -40,6 +42,7 @@ class LinkFilter(commands.Cog, name='Link Filter'):
     @whitelist.command()
     @commands.check(isLeader)
     async def remove(self, ctx, domain: str):
+        """Removes a domain from the whitelist"""
         whitelist = db["whitelist"]
         if domain in whitelist:
             whitelist.remove(domain)
@@ -60,6 +63,9 @@ class LinkFilter(commands.Cog, name='Link Filter'):
                     return True
                 return False
 
+    # Checks to see if the URLs in a user's message are allowed.
+    # If any of them are not, a list of allowed domains is sent to the user
+    # and the offending message is deleted.
     async def filterMessage(self, message):
         urls = re.findall(self.urlRegex, message.clean_content)
         for url in urls:
@@ -72,7 +78,8 @@ class LinkFilter(commands.Cog, name='Link Filter'):
                 await message.author.send(msg)
                 await message.delete()
                 return
-
+                
+    # Filters the messages of all members without the 'Youth Minister' or 'Leader' role
     @commands.Cog.listener()
     async def on_message(self, message):
         # Ignore DMs with the bot
@@ -83,6 +90,7 @@ class LinkFilter(commands.Cog, name='Link Filter'):
         if not hasRole(author, ['Youth Minister', 'Leader']):
             await self.filterMessage(message)
 
+    # Custom error message for when a non-leader tries to change the whitelist
     @add.error
     @remove.error
     async def permissionsError(self, ctx, error):

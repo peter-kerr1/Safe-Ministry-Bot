@@ -15,6 +15,7 @@ class SafeMinistry(commands.Cog, name='Safe Ministry'):
     def youthPresent(self, members):
         return find(lambda m: hasRole(m, ['Youth']), members) is not None
 
+    # Returns True if there are 2 or more leaders in the voiceChannel, False otherwise.
     def validVoiceChannelState(self, voiceChannel):
         members = voiceChannel.members
         if self.youthPresent(members):
@@ -23,20 +24,23 @@ class SafeMinistry(commands.Cog, name='Safe Ministry'):
                 return False
         return True
 
-    async def setChannelDeafness(self, channel, deaf):
-        members = channel.members
+    # Deafens or undeafens all members in a voice channel, based on whether 'deaf' is True or False.
+    async def setChannelDeafness(self, voiceChannel, deaf):
+        members = voiceChannel.members
         for member in members:
             await member.edit(deafen=deaf)
             if deaf is True and member.dm_channel is None:
-                await member.send(f"**Voice channel currently disabled:** there are less than two leaders in the {channel.mention} voice channel.\n"
+                await member.send(f"**Voice channel currently disabled:** there are less than two leaders in the {voiceChannel.mention} voice channel.\n"
                                   "The channel will be enabled again when two or more leaders join.\n"
                                   "*This is the only time you will receive this message.*")
 
-    async def manageChannel(self, channel):
-        if self.validVoiceChannelState(channel):
-            await self.setChannelDeafness(channel, False)
+    # Checks whether a voice channel is following Safe Ministry guidelines,
+    # and deafens/undeafens the channel accordingly.
+    async def manageChannel(self, voiceChannel):
+        if self.validVoiceChannelState(voiceChannel):
+            await self.setChannelDeafness(voiceChannel, False)
         else:
-            await self.setChannelDeafness(channel, True)
+            await self.setChannelDeafness(voiceChannel, True)
 
     # Ensure safe ministry guidelines are followed in voice channels
     @commands.Cog.listener()

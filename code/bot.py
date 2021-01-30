@@ -7,7 +7,6 @@ from discord.ext import commands
 
 from keep_awake import keep_awake
 
-
 # For logging events/errors
 logger = logging.getLogger('discord')
 logger.setLevel(logging.INFO)  # Options in decending order: CRITICAL, ERROR, WARNING, INFO, DEBUG; default WARNING
@@ -16,7 +15,9 @@ handler.setFormatter(logging.Formatter('%(asctime)s:%(levelname)s:%(name)s: %(me
 logger.addHandler(handler)
 
 # Initialize the bot
-bot = commands.Bot(command_prefix='!', help_command=commands.DefaultHelpCommand(no_category='Misc'), intents=discord.Intents.all())
+bot = commands.Bot(command_prefix='?',
+                   help_command=commands.DefaultHelpCommand(no_category='Misc', dm_help=True),
+                   intents=discord.Intents.all())
 
 # Load all extensions to start
 for filename in os.listdir('./extensions'):

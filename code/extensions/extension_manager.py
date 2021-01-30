@@ -11,13 +11,23 @@ class ExtensionManager(commands.Cog, name='Extension Manager'):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command()
+    @commands.group()
+    async def ext(self, ctx):
+        """Lists the currently loaded extensions"""
+        if ctx.invoked_subcommand is None:
+            extList = "```Currently loaded extensions:\n"
+            for extName in sorted(self.bot.extensions):
+                extList += f" • {extName.split('.')[1]}\n"
+            extList += "```"
+            await ctx.send(extList)
+
+    @ext.command()
     async def load(self, ctx, *, extension: str):
         """Loads an extension, given the extension filename"""
         self.bot.load_extension(f"extensions.{extension}")
         await ctx.send(f"**{extension}** loaded successfully.")
 
-    @commands.command()
+    @ext.command()
     async def unload(self, ctx, *, extension: str):
         """Unloads an extension, given the extension filename"""
         extManagerFilename = os.path.basename(__file__)[:-3]
@@ -27,20 +37,11 @@ class ExtensionManager(commands.Cog, name='Extension Manager'):
             self.bot.unload_extension(f"extensions.{extension}")
             await ctx.send(f"**{extension}** unloaded successfully.")
 
-    @commands.command()
+    @ext.command()
     async def reload(self, ctx, *, extension: str):
         """Reloads an extension, given the extension filename"""
         self.bot.reload_extension(f"extensions.{extension}")
         await ctx.send(f"**{extension}** reloaded successfully.")
-
-    @commands.command()
-    async def curr_ext(self, ctx):
-        """Lists the currently loaded extensions"""
-        extList = "```Currently loaded extensions:\n"
-        for extName in sorted(self.bot.extensions):
-            extList += f" • {extName.split('.')[1]}\n"
-        extList += "```"
-        await ctx.send(extList)
 
     @commands.command()
     async def list_ext(self, ctx):
