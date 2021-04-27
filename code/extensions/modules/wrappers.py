@@ -1,5 +1,5 @@
 from discord.utils import get
-from constants import Roles
+from .constants import Roles
 
 # Adds a role to a member, if it exists.
 # Returns True on success, False on failure.
