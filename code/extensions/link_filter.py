@@ -6,12 +6,13 @@ import aiohttp
 from replit import db
 from urllib.parse import urlparse
 from .modules.wrappers import hasRole, isLeader, getChannel
+from .modules.constants import Roles
 
 class LinkFilter(commands.Cog, name='Link Filter'):
     def __init__(self, bot):
         self.bot = bot
-        # This isn't necessarily the best regex, but it doesn't need to be perfect
-        self.urlRegex = 'https?://[^\s/$.?#].[^\s]*$'
+        # This isn't necessarily the best regex; currently leaning on the cautious side
+        self.urlRegex = 'https?://[^\s]*'
         self.imageFormats = ('image/png', 'image/jpeg', 'image/jpg', 'image/gif')
         # Allows us to assume that the whitelist key exists in the db in other functions
         if "whitelist" not in db.keys():
@@ -19,7 +20,7 @@ class LinkFilter(commands.Cog, name='Link Filter'):
 
     @commands.group()
     async def whitelist(self, ctx):
-        """Lists the domains currently in the whitelist"""
+        """Lists domains currently in the whitelist. See also ?help whitelist"""
         if ctx.invoked_subcommand is None:
             message = "```Allowed domains:\n"
             for domain in sorted(db["whitelist"]):
@@ -87,7 +88,7 @@ class LinkFilter(commands.Cog, name='Link Filter'):
             return
         # Don't filter messages of youth minister or leaders
         author = message.author
-        if not hasRole(author, ['Youth Minister', 'Leader']):
+        if not hasRole(author, [Roles.YOUTH_MINISTER.value, Roles.LEADER.value]):
             await self.filterMessage(message)
 
     # Custom error message for when a non-leader tries to change the whitelist

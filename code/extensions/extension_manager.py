@@ -5,15 +5,15 @@ import os
 class ExtensionManager(commands.Cog, name='Extension Manager'):
     """
     Allows for the dynamic loading, unloading and reloading of extensions, given the filename containing the extension.
-    Use '!curr_ext' to see the currently loaded extensions.
-    Use '!list_ext' to see all extensions available.
+    Use '?ext' to see the currently loaded extensions.
+    Use '?ext all' to see all extensions available.
     """
     def __init__(self, bot):
         self.bot = bot
 
     @commands.group()
     async def ext(self, ctx):
-        """Lists the currently loaded extensions"""
+        """Lists the currently loaded extensions. See also ?help ext"""
         if ctx.invoked_subcommand is None:
             extList = "```Currently loaded extensions:\n"
             for extName in sorted(self.bot.extensions):
@@ -43,8 +43,8 @@ class ExtensionManager(commands.Cog, name='Extension Manager'):
         self.bot.reload_extension(f"extensions.{extension}")
         await ctx.send(f"**{extension}** reloaded successfully.")
 
-    @commands.command()
-    async def list_ext(self, ctx):
+    @ext.command()
+    async def all(self, ctx):
         """Lists the filenames of all extensions available"""
         extList = "```Available extensions:\n"
         for filename in sorted(os.listdir('./extensions')):
@@ -63,6 +63,6 @@ class ExtensionManager(commands.Cog, name='Extension Manager'):
     async def cog_command_error(self, ctx, error):
         error = str(error).replace("Command raised an exception: ", '')
         await ctx.send("**[Error]** " + error)
-    
+
 def setup(bot):
     bot.add_cog(ExtensionManager(bot))

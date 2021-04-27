@@ -31,5 +31,5 @@ TOKEN = os.getenv('TOKEN')
 # Keep the program running even when the repl.it is closed
 keep_awake()
 
-# Run the bot
+# Start the bot
 bot.run(TOKEN)

@@ -2,6 +2,7 @@ from discord.ext import commands
 from discord.utils import find
 
 from .modules.wrappers import hasRole
+from modules.constants import Roles
 
 class SafeMinistry(commands.Cog, name='Safe Ministry'):
     """
@@ -13,13 +14,13 @@ class SafeMinistry(commands.Cog, name='Safe Ministry'):
 
     # Returns True if there is a Youth member present in the list of members, False otherwise
     def youthPresent(self, members):
-        return find(lambda m: hasRole(m, ['Youth']), members) is not None
+        return find(lambda m: hasRole(m, [Roles.YOUTH.value]), members) is not None
 
     # Returns True if there are 2 or more leaders in the voiceChannel, False otherwise.
     def validVoiceChannelState(self, voiceChannel):
         members = voiceChannel.members
         if self.youthPresent(members):
-            leaders = [member for member in members if hasRole(member, ['Leader'])]
+            leaders = [member for member in members if hasRole(member, [Roles.LEADER.value])]
             if len(leaders) < 2:
                 return False
         return True
