@@ -48,7 +48,8 @@ class Signup(commands.Cog):
 
                 numNewResponses = currNumResponses - self.numResponses
                 for newResponse in responses[-numNewResponses:]:
-                    invite = await channel.create_invite(max_uses=1, reason=f"Generating invite for {newResponse[self.realNameIndex]}")
+                    secondsPerMonth = 60*60*24*30
+                    invite = await channel.create_invite(max_uses=1, max_age=secondsPerMonth, reason=f"Generating invite for {newResponse[self.realNameIndex]}")
                     self.sendEmail(newResponse[self.emailAddrIndex], invite)
                 self.numResponses = currNumResponses
 
