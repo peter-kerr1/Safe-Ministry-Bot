@@ -9,7 +9,7 @@ code/extensions/modules/__pycache__/
 *.pickle
 code/.env
 code/pyvenv.cfg
-code/credentials.json
+code/credentials/
 .vscode/settings.json
 code/extensions/moderator_commands.py
 

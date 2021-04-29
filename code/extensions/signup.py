@@ -1,6 +1,5 @@
 from discord.ext import commands, tasks
 
-import os
 import yagmail
 from .modules.gsheets import gsheets
 
@@ -22,7 +21,7 @@ class Signup(commands.Cog):
 
     # Sends an invite via email to the specified address.
     def sendEmail(self, emailAddr, invite):
-        yag = yagmail.SMTP('stmattsyouth.bot@gmail.com', os.getenv('EMAIL_PASSWORD'))
+        yag = yagmail.SMTP('stmattsyouth.bot@gmail.com', oauth2_file="credentials/yagmail_oauth2.json")
         contents = ["<b>**This is an automated email**</b>", '<hr>',
                     "<p>Hi!</p>", "Here is your single-use Discord invite link:",
                     f'<a href="{invite.url}">{invite.url}</a>',"<br>",

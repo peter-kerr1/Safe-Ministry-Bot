@@ -26,7 +26,7 @@ for filename in os.listdir('./extensions'):
 
 # Load the bot password (TOKEN) as an environment variable from a '.env' file in the same directory
 load_dotenv()
-TOKEN = os.getenv('TOKEN')
+TOKEN = os.getenv('BOT_TOKEN')
 
 # Keep the program running even when the repl.it is closed
 keep_awake()
