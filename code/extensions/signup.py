@@ -9,7 +9,7 @@ class Signup(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.gsheets = gsheets()
-        self.spreadsheetId = '1sLFGdC6ITTyBmqi7egNB62ztD5gUUMAXcihlEzFhCpw'
+        self.spreadsheetId = '1b6FhTlKKD8IFJLlV21fKoteXHY8F7V6rmfD4RcSw6VY'
         self.cellRange = 'Form Responses 1!A2:D'
         self.realNameIndex = 1
         self.emailAddrIndex = 3
@@ -48,8 +48,8 @@ class Signup(commands.Cog):
 
                 numNewResponses = currNumResponses - self.numResponses
                 for newResponse in responses[-numNewResponses:]:
-                    monthInSeconds = 60*60*24*30
-                    invite = await channel.create_invite(max_uses=1, max_age=monthInSeconds, reason=f"Generating invite for {newResponse[self.realNameIndex]}")
+                    weekInSeconds = 60*60*24*7
+                    invite = await channel.create_invite(max_uses=1, max_age=weekInSeconds, reason=f"Generating invite for {newResponse[self.realNameIndex]}")
                     self.sendEmail(newResponse[self.emailAddrIndex], invite)
                 self.numResponses = currNumResponses
 
