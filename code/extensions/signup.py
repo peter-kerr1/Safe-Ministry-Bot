@@ -23,7 +23,7 @@ class Signup(commands.Cog):
     def sendEmail(self, emailAddr, invite):
         yag = yagmail.SMTP('stmattsyouth.bot@gmail.com', oauth2_file="credentials/yagmail_oauth2.json")
         contents = ["<b>**This is an automated email**</b>", '<hr>',
-                    "<p>Hi!</p>", "Here is your single-use Discord invite link:",
+                    "<p>Hi!</p>", "Here is your single-use Discord invite link, which expires after 7 days:",
                     f'<a href="{invite.url}">{invite.url}</a>',"<br>",
                     "<i>If you have any questions, reply to this email and a real person will get back to you!</i>",
                     "<br>", yagmail.inline("images/youth_logo.png")]
