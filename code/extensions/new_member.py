@@ -27,17 +27,18 @@ class NewMember(commands.Cog, name='New Member'):
         responses = self.formResponses()
         if not responses:
             print("[ERROR]: Failed to retrieve data from Google Form responses!")
+            return
+            
+        accountName = f"{member.name}#{member.discriminator}"
+        reponse = find(lambda r: r[self.accNameIndex] == accountName, responses[::-1])
+        if reponse is not None:
+            nickname = reponse[self.realNameIndex]
+            await member.edit(nick=nickname)
         else:
-            accountName = f"{member.name}#{member.discriminator}"
-            reponse = find(lambda r: r[self.accNameIndex] == accountName, responses[::-1])
-            if reponse is not None:
-                nickname = reponse[self.realNameIndex]
-                await member.edit(nick=nickname)
-            else:
-                if await addRole(member, "Muted", f"{member.name}'s permission form could not be found, muting."):
-                    await member.send("You have been muted because I can't find your permission form.\n"
-                                      "This is probably because your Discord username was mispelt in the form - try filling it out again and rejoining the server.\n"
-                                      "Otherwise, you can message a member with the Admin role and they should be able to help you!")
+            if await addRole(member, "Muted", f"{member.name}'s permission form could not be found, muting."):
+                await member.send("You have been muted because I can't find your permission form.\n"
+                                    "This is probably because your Discord username was mispelt in the form - try filling it out again and rejoining the server.\n"
+                                    "Otherwise, you can message a member with the Admin role and they should be able to help you!")
 
 def setup(bot):
     bot.add_cog(NewMember(bot))
