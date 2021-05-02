@@ -3,6 +3,7 @@ from discord.utils import find
 
 from .modules.gsheets import gsheets
 from .modules.wrappers import addRole
+from .modules.constants import Roles
 
 class NewMember(commands.Cog, name='New Member'):
     """
@@ -35,10 +36,10 @@ class NewMember(commands.Cog, name='New Member'):
             nickname = reponse[self.realNameIndex]
             await member.edit(nick=nickname)
         else:
-            if await addRole(member, "Muted", f"{member.name}'s permission form could not be found, muting."):
+            if await addRole(member, Roles.MUTED.value, f"{member.name}'s permission form could not be found, muting."):
                 await member.send("You have been muted because I can't find your permission form to join the St Matts Youth Discord group.\n"
-                                    "This is probably because your Discord username was mispelt in the form - try filling it out again and rejoining the server.\n"
-                                    "Otherwise, you can message a member with the @Admin role and they should be able to help you!")
+                                  "This is probably because your Discord username was mispelt in the form - try filling it out again and rejoining the server.\n"
+                                  "Otherwise, you can message a member with the `@Admin` role and they should be able to help you!")
 
 def setup(bot):
     bot.add_cog(NewMember(bot))
