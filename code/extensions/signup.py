@@ -2,6 +2,7 @@ from discord.ext import commands, tasks
 
 import yagmail
 from .modules.gsheets import gsheets
+from .modules.constants import Roles
 
 # Must have followed steps 1 & 2 of the following link for this extension to work:
 # https://developers.google.com/sheets/api/quickstart/python
@@ -28,6 +29,15 @@ class Signup(commands.Cog):
                     "<i>If you have any questions, reply to this email and a real person will get back to you!</i>",
                     "<br>", yagmail.inline("images/youth_logo.png")]
         yag.send(emailAddr, "St Matt's Youth Discord Sign-up Link", contents)
+
+    @commands.command()
+    @commands.has_role(Roles.ADMIN.value)
+    async def sendinv(self, ctx, *, email: str):
+        welcomeChannelId = 793985785412976640
+        channel = self.bot.get_channel(welcomeChannelId)
+        weekInSeconds = 60*60*24*7
+        invite = await channel.create_invite(max_uses=1, max_age=weekInSeconds, reason=f"Sending manual invite to {email}")
+        self.sendEmail(email, invite)
 
     # Checks to see if a new permission form has been filled out once every 5 seconds,
     # and sends an email invite to the new responses, if there are any.
