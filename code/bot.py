@@ -28,7 +28,7 @@ for filename in os.listdir('./extensions'):
 load_dotenv()
 TOKEN = os.getenv('BOT_TOKEN')
 
-# Keep the program running even when the repl.it is closed
+# Keep the program running even when repl.it is closed
 keep_awake()
 
 # Start the bot

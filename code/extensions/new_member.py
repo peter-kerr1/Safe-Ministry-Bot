@@ -13,7 +13,7 @@ class NewMember(commands.Cog, name='New Member'):
     def __init__(self, bot):
         self.bot = bot
         self.gsheets = gsheets()
-        self.spreadsheetId = '1b6FhTlKKD8IFJLlV21fKoteXHY8F7V6rmfD4RcSw6VY'
+        self.spreadsheetId = '10q9-Hd-_9NMbCPils45QTnojtE6UHd2zavbZDs-y0ec'
         self.cellRange = 'Form Responses 1!A2:D'
         self.realNameIndex = 1
         self.accNameIndex = 2

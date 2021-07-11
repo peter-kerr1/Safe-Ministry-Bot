@@ -97,7 +97,7 @@ class LinkFilter(commands.Cog, name='Link Filter'):
     async def permissionsError(self, ctx, error):
         if isinstance(error, commands.CheckFailure):
             command = ctx.invoked_subcommand
-            await ctx.send(f"**[Error]** You must be a leader to use the **!{command}** command.")
+            await ctx.send(f"**[Error]** You must be a leader to use the **?{command}** command.")
 
     # Print out error messages to the channel where they were invoked
     async def cog_command_error(self, ctx, error):
