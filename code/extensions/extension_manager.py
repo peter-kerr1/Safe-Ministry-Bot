@@ -59,10 +59,5 @@ class ExtensionManager(commands.Cog, name='Extension Manager'):
             raise commands.MissingPermissions(['administrator'])
         return True
 
-    # Print out error messages to the channel where they were invoked
-    async def cog_command_error(self, ctx, error):
-        error = str(error).replace("Command raised an exception: ", '')
-        await ctx.send("**[Error]** " + error)
-
 def setup(bot):
     bot.add_cog(ExtensionManager(bot))

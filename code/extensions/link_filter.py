@@ -99,11 +99,5 @@ class LinkFilter(commands.Cog, name='Link Filter'):
             command = ctx.invoked_subcommand
             await ctx.send(f"**[Error]** You must be a leader to use the **?{command}** command.")
 
-    # Print out error messages to the channel where they were invoked
-    async def cog_command_error(self, ctx, error):
-        if not isinstance(error, commands.CheckFailure):
-            error = str(error).replace("Command raised an exception: ", '')
-            await ctx.send("**[Error]** " + error)
-
 def setup(bot):
     bot.add_cog(LinkFilter(bot))
