@@ -33,7 +33,6 @@ class Signup(commands.Cog):
     @commands.command()
     @commands.has_role(Roles.ADMIN.value)
     async def sendinv(self, ctx, *, email: str):
-        # print(f"{1/0}")
         welcomeChannelId = 793985785412976640
         channel = self.bot.get_channel(welcomeChannelId)
         weekInSeconds = 60*60*24*7
