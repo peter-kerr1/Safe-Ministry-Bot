@@ -20,7 +20,7 @@ class Signup(commands.Cog):
     def formResponses(self):
         return self.gsheets.getValues(self.spreadsheetId, self.cellRange)
 
-    # Sends an invite via email to the specified address.
+    # Sends an invite via email to the specified address
     def sendEmail(self, emailAddr, invite):
         yag = yagmail.SMTP('stmattsyouth.bot@gmail.com', oauth2_file="credentials/yagmail_oauth2.json")
         contents = ["<b>**This is an automated email**</b>", '<hr>',
@@ -30,9 +30,10 @@ class Signup(commands.Cog):
                     "<br>", yagmail.inline("images/youth_logo.png")]
         yag.send(emailAddr, "St Matt's Youth Discord Sign-up Link", contents)
 
-    @commands.command()
+    # Manually send an invite link to a specified address
+    @commands.command(name='sendinv')
     @commands.has_role(Roles.ADMIN.value)
-    async def sendinv(self, ctx, *, email: str):
+    async def sendInv(self, ctx, *, email: str):
         welcomeChannelId = 793985785412976640
         channel = self.bot.get_channel(welcomeChannelId)
         weekInSeconds = 60*60*24*7
@@ -45,7 +46,7 @@ class Signup(commands.Cog):
     async def checkSignups(self):
         responses = self.formResponses()
         if not responses:
-            print('[ERROR]: Failed to retrieve data from Google Form responses!')
+            raise UnboundLocalError("Google form responses could not be loaded")
         else:
             currNumResponses = len(responses)
             if currNumResponses > self.numResponses:
