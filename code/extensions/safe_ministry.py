@@ -20,7 +20,7 @@ class SafeMinistry(commands.Cog, name='Safe Ministry'):
     def validVoiceChannelState(self, voiceChannel):
         members = voiceChannel.members
         if self.youthPresent(members):
-            leaders = [member for member in members if hasRole(member, [Roles.LEADER.value])]
+            leaders = [member for member in members if hasRole(member, [Roles.LEADER.value, Roles.YOUTH_MINISTER.value])]
             if len(leaders) < 2:
                 return False
         return True
@@ -46,11 +46,13 @@ class SafeMinistry(commands.Cog, name='Safe Ministry'):
     # Ensure safe ministry guidelines are followed in voice channels
     @commands.Cog.listener()
     async def on_voice_state_update(self, member, before, after):
-        # Only trigger when someone joins or leaves a voice channel
+        # Only trigger when someone joins, leaves or moves between voice channels
         if before.channel is None and after.channel is not None:
             await self.manageChannel(after.channel)
         elif before.channel is not None and after.channel is None:
             await self.manageChannel(before.channel)
+        elif before.channel is not after.channel:
+            await self.manageChannel(after.channel)
 
 def setup(bot):
     bot.add_cog(SafeMinistry(bot))
