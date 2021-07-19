@@ -21,7 +21,3 @@ def hasRole(member, roles):
 # Designed to be used as a check for a command, eg: @commands.check(isLeader) above a command definition.
 async def isLeader(ctx):
     return hasRole(ctx.author, [Roles.YOUTH_MINISTER.value, Roles.LEADER.value])
-
-# Returns the channel in the guild that has a name matching channelName
-def getChannel(guild, channelName):
-    return get(guild.channels, name=channelName)

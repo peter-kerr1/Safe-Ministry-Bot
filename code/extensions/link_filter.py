@@ -1,11 +1,12 @@
 from discord import ChannelType
 from discord.ext import commands
+from discord.utils import get
 
 import re
 import aiohttp
 from replit import db
 from urllib.parse import urlparse
-from .modules.wrappers import hasRole, isLeader, getChannel
+from .modules.wrappers import hasRole, isLeader
 from .modules.constants import Roles
 
 class LinkFilter(commands.Cog, name='Link Filter'):
@@ -74,7 +75,7 @@ class LinkFilter(commands.Cog, name='Link Filter'):
                 msg = "Only image links and the following websites are currently allowed:\n```"
                 for domain in sorted(db["whitelist"]):
                     msg += f" • {domain}\n"
-                suggChannel = getChannel(message.guild, "suggestions")
+                suggChannel = get(message.guild.channels, name="suggestions")
                 msg += f"```If you think the link you just sent should be allowed, let us know in the {suggChannel.mention} channel!"
                 await message.author.send(msg)
                 await message.delete()
@@ -87,8 +88,7 @@ class LinkFilter(commands.Cog, name='Link Filter'):
         if message.channel.type == ChannelType.private:
             return
         # Don't filter messages of youth minister or leaders
-        author = message.author
-        if not hasRole(author, [Roles.YOUTH_MINISTER.value, Roles.LEADER.value]):
+        if not hasRole(message.author, [Roles.YOUTH_MINISTER.value, Roles.LEADER.value]):
             await self.filterMessage(message)
 
     # Custom error message for when a non-leader tries to change the whitelist
