@@ -50,7 +50,8 @@ class Signup(commands.Cog):
 
     # Checks to see if a new permission form has been filled out once every 5 seconds,
     # and sends an email invite to the new responses, if there are any.
-    # This code is intentionally messy to remind me of certain things when this bot gets launched to run on multiple servers
+    # This code is intentionally messy to remind me of certain things when this bot gets launched to run on multiple servers. See also:
+    # https://discordpy.readthedocs.io/en/stable/faq.html#how-do-i-get-a-specific-model
     @tasks.loop(seconds=5.0)
     async def checkSignups(self):
         responses = self.formResponses()

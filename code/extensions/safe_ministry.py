@@ -1,5 +1,5 @@
 from discord.ext import commands
-from discord.utils import find
+from discord.utils import find, get
 
 from .modules.wrappers import hasRole
 from .modules.constants import Roles
@@ -27,14 +27,24 @@ class SafeMinistry(commands.Cog, name='Safe Ministry'):
         return True
 
     # Deafens or undeafens all members in a voice channel, based on whether 'deaf' is True or False.
+    # Sharing camera/screen is included in this definition.
     async def setChannelDeafness(self, voiceChannel, deaf):
+        # Enable/disable sharing camera & screen
+        everyoneRole = get(voiceChannel.guild.roles, name="@everyone")
+        await voiceChannel.set_permissions(everyoneRole, stream=(not deaf))
+
+        # Manage deafness, disconnect members if sharing camera/screen and deaf=True.
+        # (Disabling sharing camera/screen doesn't stop them sharing if they were already doing so.)
         members = voiceChannel.members
         for member in members:
             await member.edit(deafen=deaf)
-            if deaf is True and member.dm_channel is None:
-                await member.send(f"**Voice channel currently disabled:** there are less than two leaders in the {voiceChannel.mention} voice channel.\n"
-                                  "The channel will be enabled again when two or more leaders join.\n"
-                                  "*This is the only time you will receive this message.*")
+            if deaf is True:
+                if member.voice.self_stream or member.voice.self_video:
+                    await member.edit(voice_channel=None) # disconnect
+                if member.dm_channel is None:
+                    await member.send(f"**Voice channel currently disabled:** there are less than two leaders in the {voiceChannel.mention} voice channel.\n"
+                                       "The channel will be enabled again when two or more leaders join.\n"
+                                       "*This is the only time you will receive this message.*")
 
     # Checks whether a voice channel is following Safe Ministry guidelines,
     # and deafens/undeafens the channel accordingly.
