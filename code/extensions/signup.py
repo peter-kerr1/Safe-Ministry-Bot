@@ -30,7 +30,8 @@ class Signup(commands.Cog):
                     "<br>", yagmail.inline("images/youth_logo.png")]
         yag.send(emailAddr, "St Matt's Youth Discord Sign-up Link", contents)
 
-    # Manually send an invite link to a specified address
+    # Manually send an invite link to a specified address.
+    # Can be used to confirm that emails are working.
     @commands.command(name='sendinv')
     @commands.has_role(Roles.ADMIN.value)
     async def sendInv(self, ctx, *, email: str):
@@ -38,10 +39,18 @@ class Signup(commands.Cog):
         channel = self.bot.get_channel(welcomeChannelId)
         weekInSeconds = 60*60*24*7
         invite = await channel.create_invite(max_uses=1, max_age=weekInSeconds, reason=f"Sending manual invite to {email}")
-        self.sendEmail(email, invite)
+        try:
+            self.sendEmail(email, invite)
+        except:
+            # Now that the refresh tokens have been fixed, this shouldn't happen.
+            # Hence I'm not going to try to constrain the scope of the except :P
+            await ctx.send(f"Email failed!")
+        else:
+            await ctx.send(f"Email sent!")
 
     # Checks to see if a new permission form has been filled out once every 5 seconds,
     # and sends an email invite to the new responses, if there are any.
+    # This code is intentionally messy to remind me of certain things when this bot gets launched to run on multiple servers
     @tasks.loop(seconds=5.0)
     async def checkSignups(self):
         responses = self.formResponses()
