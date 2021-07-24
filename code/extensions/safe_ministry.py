@@ -1,8 +1,10 @@
 from discord.ext import commands
-from discord.utils import find, get
+from discord.utils import find
 
 from .modules.wrappers import hasRole
 from .modules.constants import Roles
+
+import asyncio
 
 class SafeMinistry(commands.Cog, name='Safe Ministry'):
     """
@@ -11,6 +13,7 @@ class SafeMinistry(commands.Cog, name='Safe Ministry'):
     """
     def __init__(self, bot):
         self.bot = bot
+        self.tempChannel = None
 
     # Returns True if there is a Youth member present in the list of members, False otherwise
     def youthPresent(self, members):
@@ -29,18 +32,23 @@ class SafeMinistry(commands.Cog, name='Safe Ministry'):
     # Deafens or undeafens all members in a voice channel, based on whether 'deaf' is True or False.
     # Sharing camera/screen is included in this definition.
     async def setChannelDeafness(self, voiceChannel, deaf):
+        # Find the category that contains the current voiceChannel
+        category = voiceChannel.category or voiceChannel.guild
+        
         # Enable/disable sharing camera & screen
-        everyoneRole = get(voiceChannel.guild.roles, name="@everyone")
-        await voiceChannel.set_permissions(everyoneRole, stream=(not deaf))
+        await voiceChannel.set_permissions(voiceChannel.guild.default_role, stream=(not deaf))
 
-        # Manage deafness, disconnect members if sharing camera/screen and deaf=True.
+        # Manage deafness of members, shuffle if sharing camera/screen and deaf=True.
         # (Disabling sharing camera/screen doesn't stop them sharing if they were already doing so.)
-        members = voiceChannel.members
-        for member in members:
+        for member in voiceChannel.members:
             await member.edit(deafen=deaf)
             if deaf is True:
                 if member.voice.self_stream or member.voice.self_video:
-                    await member.edit(voice_channel=None) # disconnect
+                    self.tempChannel = await category.create_voice_channel(f"{voiceChannel.name}-temp")
+                    await member.move_to(self.tempChannel)
+                    await asyncio.sleep(0.5)
+                    await member.move_to(voiceChannel)
+                    await self.tempChannel.delete()
                 if member.dm_channel is None:
                     await member.send(f"**Voice channel currently disabled:** there are less than two leaders in the {voiceChannel.mention} voice channel.\n"
                                        "The channel will be enabled again when two or more leaders join.\n"
@@ -49,6 +57,10 @@ class SafeMinistry(commands.Cog, name='Safe Ministry'):
     # Checks whether a voice channel is following Safe Ministry guidelines,
     # and deafens/undeafens the channel accordingly.
     async def manageChannel(self, voiceChannel):
+        # Don't process the temp channel used for moving members
+        if voiceChannel is self.tempChannel:
+            return
+        
         if self.validVoiceChannelState(voiceChannel):
             await self.setChannelDeafness(voiceChannel, False)
         else:
