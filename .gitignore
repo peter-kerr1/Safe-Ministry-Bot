@@ -1,16 +1,9 @@
-code/Lib/
-code/Include/
-code/Scripts/
-code/tests
-*/__pycache__/
-code/extensions/__pycache__/
-code/extensions/modules/__pycache__/
+
+__pycache__
 *.log
-code/.env
-code/pyvenv.cfg
 code/test.py
 code/credentials/
-.vscode/settings.json
 
 poetry.lock
 pyproject.toml
+.breakpoints
