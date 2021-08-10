@@ -1,4 +1,5 @@
 from discord.utils import get
+from .constants import Roles
 
 # Adds a role to a member, if it exists.
 # Returns True on success, False on failure.
@@ -15,4 +16,8 @@ def hasRole(member, roles):
         if get(member.roles, name=role) is not None:
             return True
     return False
-    
+
+# Returns true if the message author is a Youth Minister or Leader.
+# Designed to be used as a check for a command, eg: @commands.check(isLeader) above a command definition.
+async def isLeader(ctx):
+    return hasRole(ctx.author, [Roles.YOUTH_MINISTER.value, Roles.LEADER.value])
