@@ -10,6 +10,10 @@ from .modules.wrappers import hasRole, isLeader
 from .modules.constants import Roles
 
 class LinkFilter(commands.Cog, name='Link Filter'):
+    """
+    Maintains a whitelist of websites that are allowed to be linked in messages.
+    Automatically deletes non-image links that aren't in the whitelist.
+    """
     def __init__(self, bot):
         self.bot = bot
         # This isn't necessarily the best regex; currently leaning on the cautious side
@@ -33,8 +37,8 @@ class LinkFilter(commands.Cog, name='Link Filter'):
     @commands.check(isLeader)
     async def add(self, ctx, domain: str):
         """Adds a domain to the whitelist"""
-        if domain not in db["whitelist"]:
-            whitelist = db["whitelist"]
+        whitelist = db["whitelist"]
+        if domain not in whitelist:
             whitelist.append(domain)
             db["whitelist"] = whitelist
             await ctx.send(f"**{domain}** added successfully.")

@@ -4,9 +4,11 @@ import yagmail
 from .modules.gsheets import gsheets
 from .modules.constants import Roles
 
-# Must have followed steps 1 & 2 of the following link for this extension to work:
-# https://developers.google.com/sheets/api/quickstart/python
 class Signup(commands.Cog):
+    """
+    Regularly checks to see if a new permission form has been filled out.
+    If a new permission form is found, an invite link to the server is sent to the email address specified in the form.
+    """
     def __init__(self, bot):
         self.bot = bot
         self.gsheets = gsheets()
@@ -42,8 +44,6 @@ class Signup(commands.Cog):
         try:
             self.sendEmail(email, invite)
         except:
-            # Now that the refresh tokens have been fixed, this shouldn't happen.
-            # Hence I'm not going to try to constrain the scope of the except :P
             await ctx.send(f"Email failed!")
         else:
             await ctx.send(f"Email sent!")

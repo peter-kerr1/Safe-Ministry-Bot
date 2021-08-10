@@ -85,7 +85,7 @@ class SafeMinistry(commands.Cog, name='Safe Ministry'):
         elif before.channel is not None and after.channel is None:
             await self.manageChannel(before.channel)
         elif before.channel is not after.channel:
-            # Don't process when members are moved to a temp channel, causes loops
+            # Don't re-manage before.channel when members are moved to a temp channel
             if after.channel.name.endswith(f"-temp-{after.channel.guild.id}"):
                 return
             await self.manageChannel(before.channel)
