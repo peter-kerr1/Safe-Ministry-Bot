@@ -31,6 +31,13 @@ class SafeMinistry(commands.Cog, name='Safe Ministry'):
         return True
 
 
+    # Moves a list of members to a specified Discord voice channel,
+    # handling cases where people have disconnected before getting moved gracefully
+    async def moveMembers(self, members, channel):
+        for member in members:
+            if member is not None and member.voice is not None: 
+                await member.move_to(channel)
+
     # Deafens or undeafens all members in a voice channel, based on whether 'deaf' is True or False.
     # Sharing camera/screen is included in this definition.
     async def setChannelDeafness(self, voiceChannel, deaf):
@@ -40,6 +47,14 @@ class SafeMinistry(commands.Cog, name='Safe Ministry'):
         # Enable/disable sharing camera & screen
         await voiceChannel.set_permissions(voiceChannel.guild.default_role, stream=(not deaf))
 
+        # Manage deafness of members
+        for member in voiceChannel.members:
+            if member is not None and member.voice is not None: 
+                await member.edit(deafen=deaf)
+            if deaf is True and member.bot is False and member.dm_channel is None:
+                    await member.send(f"**Voice channel currently disabled:** there are less than two leaders in the {voiceChannel.mention} voice channel.\n"
+                                    "The channel will be enabled again when two or more leaders join.\n")
+
         # Shuffle members if sharing camera/screen and deaf=True.
         # (Disabling sharing camera/screen doesn't stop them sharing if they were already doing so.)
         muteVideo = []
@@ -47,19 +62,10 @@ class SafeMinistry(commands.Cog, name='Safe Ministry'):
             muteVideo = [member for member in voiceChannel.members if member.voice.self_stream or member.voice.self_video]
         if len(muteVideo) > 0:
             tempChannel = await category.create_voice_channel(f"{voiceChannel.name}-temp-{voiceChannel.guild.id}")
-            for member in muteVideo:
-                await member.move_to(tempChannel)
-            await asyncio.sleep(0.5)
-            for member in muteVideo:
-                await member.move_to(voiceChannel)
+            await self.moveMembers(muteVideo, tempChannel)
+            await asyncio.sleep(2)
+            await self.moveMembers(muteVideo, voiceChannel)
             await tempChannel.delete()
-
-        # Manage deafness of members
-        for member in voiceChannel.members:
-            await member.edit(deafen=deaf)
-            if deaf is True and member.bot is False and member.dm_channel is None:
-                    await member.send(f"**Voice channel currently disabled:** there are less than two leaders in the {voiceChannel.mention} voice channel.\n"
-                                    "The channel will be enabled again when two or more leaders join.\n")
 
 
     # Checks whether a voice channel is following Safe Ministry guidelines,

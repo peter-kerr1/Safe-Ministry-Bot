@@ -26,7 +26,13 @@ async def botmsg(ctx, *, message: str):
     #                             details="this is another test")
     await ctx.bot.change_presence(activity=discord.Game(message))
 
+@commands.command()
+async def state(ctx, member: discord.Member):
+    await ctx.send(f"{member.joined_at}")
+    await ctx.send(f"{member.voice}")
+
 def setup(bot):
     bot.add_command(ping)
     bot.add_command(coinflip)
     bot.add_command(botmsg)
+    bot.add_command(state)
